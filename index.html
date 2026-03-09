@@ -7,6 +7,7 @@
     <title>Service Request PWA</title>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#4f46e5">
+    <!-- Apple Touch Icon -->
     <link rel="apple-touch-icon" href="icon.svg">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
@@ -21,7 +22,7 @@
         <header class="glass-header">
             <img src="icon.svg" alt="Logo" class="logo">
             <h1>Service Request</h1>
-            <p>Submit your request & get a token</p>
+            <p>Generate Token for Service Request</p>
         </header>
 
         <nav class="glass-tabs" style="margin-bottom: 24px;">
@@ -34,17 +35,17 @@
             <form id="orderForm">
                 <div class="input-group">
                     <label for="name">Full Name</label>
-                    <input type="text" id="name" placeholder="E.g., Ahmed" required autocomplete="name">
+                    <input type="text" id="name" placeholder="Name" required autocomplete="name">
                 </div>
 
                 <div class="input-group">
                     <label for="purpose">Purpose</label>
-                    <input type="text" id="purpose" placeholder="E.g., Passport Renewal" required autocomplete="off">
+                    <input type="text" id="purpose" placeholder="Service Required" required autocomplete="off">
                 </div>
 
                 <div class="input-group">
                     <label for="mobile">Mobile Number</label>
-                    <input type="tel" id="mobile" placeholder="E.g., 9876543210" required autocomplete="tel"
+                    <input type="tel" id="mobile" placeholder="Mobile Number" required autocomplete="tel"
                         pattern="[0-9]{10}">
                 </div>
 
