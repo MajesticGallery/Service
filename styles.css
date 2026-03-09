@@ -24,7 +24,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
     position: relative;
     padding: 20px;
 }
@@ -74,6 +75,16 @@ body {
     100% {
         transform: translate(30px, 50px) scale(1.1);
     }
+}
+
+main {
+    width: 100%;
+    max-width: 420px;
+    z-index: 10;
+    margin: 40px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
 }
 
 .container {
@@ -168,7 +179,7 @@ body {
 }
 
 .glass-card.hidden {
-    display: none;
+    display: none !important;
 }
 
 .input-group {
@@ -407,9 +418,6 @@ button[type="submit"]:active {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    max-height: 400px;
-    overflow-y: auto;
-    padding-right: 4px;
 }
 
 /* Custom Scrollbar */
@@ -497,7 +505,7 @@ button[type="submit"]:active {
 
 .mark-ready-btn {
     background: rgba(16, 185, 129, 0.1);
-    color: #10b981;
+    color: #fb0101;
     border: 1px solid rgba(16, 185, 129, 0.3);
     padding: 6px 12px;
     border-radius: 8px;
