@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const resPurpose = document.getElementById('resPurpose');
     const newRequestBtn = document.getElementById('newRequestBtn');
     const waUserBtn = document.getElementById('waUserBtn');
+    const broadcastSection = document.getElementById('broadcast-section');
 
     // Google Apps Script Web App URL
     const API_URL = "https://script.google.com/macros/s/AKfycbwesLZXRI59QYjys7r_DhvATQGwBAxnVj5tNk9rpbyLIisrniXfrulHQe0dOSNjyqnO/exec";
@@ -29,6 +30,12 @@ document.addEventListener('DOMContentLoaded', () => {
             formSection.classList.add('hidden');
             resultSection.classList.add('hidden');
             adminSection.classList.add('hidden');
+            if (broadcastSection) broadcastSection.classList.add('hidden');
+
+            formSection.classList.remove('active');
+            resultSection.classList.remove('active');
+            adminSection.classList.remove('active');
+            if (broadcastSection) broadcastSection.classList.remove('active');
 
             // Add active to clicked
             btn.classList.add('active');
@@ -134,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function setupWaUserBtn(orderId, purpose, mobile) {
         waUserBtn.onclick = () => {
-            const message = `Order ID: ${orderId}, Purpose has been Processing.`;
+            const message = `We received your Order ID: *${orderId}* for *${purpose}*. We are currently processing it. Feel free to reply here if you have any questions!\nSave number for future updates.`;
             const encodedMsg = encodeURIComponent(message);
             window.open(`https://wa.me/${mobile}?text=${encodedMsg}`, '_blank');
         };
@@ -223,7 +230,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let waNum = String(mobile).replace(/\D/g, '');
         if (waNum.length === 10) waNum = "91" + waNum;
 
-        const message = `Hi! We received your request for ${purpose} (Order ID: ${orderId}). We are currently processing it. Feel free to reply here if you have any questions! Save number for future updates.`;
+        const message = `We received your Order ID: *${orderId}* for *${purpose}*. We are currently processing it. Feel free to reply here if you have any questions!\nSave number for future updates.`;
         const encodedMsg = encodeURIComponent(message);
         window.open(`https://wa.me/${waNum}?text=${encodedMsg}`, '_blank');
     }
@@ -236,7 +243,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let waNum = String(mobile).replace(/\D/g, '');
         if (waNum.length === 10) waNum = "91" + waNum;
 
-        const message = `Your Order ID ${orderId} is ready. Please come and collect your documents.`;
+        const message = `Your Order ID: *${orderId}* is ready. Please come and collect.`;
         const encodedMsg = encodeURIComponent(message);
         window.open(`https://wa.me/${waNum}?text=${encodedMsg}`, '_blank');
     }
