@@ -1,6 +1,6 @@
 {
   "name": "Service Request PWA",
-  "short_name": "Requests",
+  "short_name": "Majestic Gallery",
   "description": "Progressive Web App for submitting service requests to Google Sheets",
   "start_url": "./index.html",
   "display": "standalone",
