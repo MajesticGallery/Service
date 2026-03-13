@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const newRequestBtn = document.getElementById('newRequestBtn');
     const waUserBtn = document.getElementById('waUserBtn');
     const broadcastSection = document.getElementById('broadcast-section');
+    const creditSection = document.getElementById('credit-section');
 
     // Google Apps Script Web App URL
     const API_URL = "https://script.google.com/macros/s/AKfycbwesLZXRI59QYjys7r_DhvATQGwBAxnVj5tNk9rpbyLIisrniXfrulHQe0dOSNjyqnO/exec";
@@ -31,11 +32,13 @@ document.addEventListener('DOMContentLoaded', () => {
             resultSection.classList.add('hidden');
             adminSection.classList.add('hidden');
             if (broadcastSection) broadcastSection.classList.add('hidden');
+            if (creditSection) creditSection.classList.add('hidden');
 
             formSection.classList.remove('active');
             resultSection.classList.remove('active');
             adminSection.classList.remove('active');
             if (broadcastSection) broadcastSection.classList.remove('active');
+            if (creditSection) creditSection.classList.remove('active');
 
             // Add active to clicked
             btn.classList.add('active');
@@ -50,6 +53,10 @@ document.addEventListener('DOMContentLoaded', () => {
             // If switching to admin view or broadcast, load orders
             if (targetId === 'admin-section' || targetId === 'broadcast-section') {
                 loadOrders();
+            }
+            // If switching to credit tracker, render credits
+            if (targetId === 'credit-section') {
+                renderCredits();
             }
         });
     });
@@ -141,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function setupWaUserBtn(orderId, purpose, mobile) {
         waUserBtn.onclick = () => {
-            const message = `We received your Order ID: *${orderId}* for *${purpose}*. We are currently processing it. Feel free to reply here if you have any questions!\nSave number for future updates.`;
+            const message = `Majestic Gallery City Mall\n\nനിങ്ങൾ നൽകിയ *${purpose}* ഐറ്റം സ്വീകരിച്ചിരിക്കുന്നു.\n\nറെഡിയായാൽ നിങ്ങളെ ഈ നമ്പറിൽ അറിയിക്കും. നന്ദി.`;
             const encodedMsg = encodeURIComponent(message);
             window.open(`https://wa.me/${mobile}?text=${encodedMsg}`, '_blank');
         };
@@ -198,7 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
                         </button>
                     ` : `
-                        <button class="wa-icon-btn notify-wa-btn" data-id="${order.orderId}" data-num="${order.mobile}" style="width: 100%; justify-content: center;">
+                        <button class="wa-icon-btn notify-wa-btn" data-id="${order.orderId}" data-num="${order.mobile}" data-purpose="${order.purpose}" style="width: 100%; justify-content: center;">
                             <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
                             Notify User
                         </button>
@@ -230,7 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let waNum = String(mobile).replace(/\D/g, '');
         if (waNum.length === 10) waNum = "91" + waNum;
 
-        const message = `We received your Order ID: *${orderId}* for *${purpose}*. We are currently processing it. Feel free to reply here if you have any questions!\nSave number for future updates.`;
+        const message = `Majestic Gallery City Mall\n\nനിങ്ങൾ നൽകിയ *${purpose}* ഐറ്റം സ്വീകരിച്ചിരിക്കുന്നു.\n\nറെഡിയായാൽ നിങ്ങളെ ഈ നമ്പറിൽ അറിയിക്കും. നന്ദി.`;
         const encodedMsg = encodeURIComponent(message);
         window.open(`https://wa.me/${waNum}?text=${encodedMsg}`, '_blank');
     }
@@ -239,11 +246,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const btn = e.currentTarget;
         const orderId = btn.getAttribute('data-id');
         const mobile = btn.getAttribute('data-num');
+        const purpose = btn.getAttribute('data-purpose'); // ← fixed: read from data attribute
 
         let waNum = String(mobile).replace(/\D/g, '');
         if (waNum.length === 10) waNum = "91" + waNum;
 
-        const message = `Your Order ID: *${orderId}* is ready. Please come and collect.`;
+        const message = `Majestic Gallery City Mall\n*${purpose}* ready to collect...\n\nനിങ്ങളുടെ *${purpose}* റെഡിയായിട്ടുണ്ട്.\nനാളെ രാവിലെ വന്നു കളക്ട് ചെയ്യുമല്ലോ.\n\nമജസ്റ്റിക് Gallery യുടെ ഈ നമ്പർ നിങ്ങൾക്ക് സേവ് ചെയ്യാം.!!\n\nഭാവിയിൽ ഓഫറും കാര്യങ്ങളും നിങ്ങളെ ഇൻഫോം ചെയ്യുന്നതായിരിക്കും`;
         const encodedMsg = encodeURIComponent(message);
         window.open(`https://wa.me/${waNum}?text=${encodedMsg}`, '_blank');
     }
@@ -282,13 +290,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     statusBadge.className = "status-badge ready";
                 }
 
-                // 2. We need the mobile number to create the WA button. It's stored on the processing WA button.
+                // 2. mobile + purpose are stored on the processing WA button
                 const procWaBtn = actionRow.querySelector('.notify-processing-wa-btn');
-                const mobile = procWaBtn ? procWaBtn.getAttribute('data-num') : '';
+                const mobile  = procWaBtn ? procWaBtn.getAttribute('data-num') : '';
+                const purpose = procWaBtn ? procWaBtn.getAttribute('data-purpose') : '';
 
                 // 3. Replace the entire action row contents
                 actionRow.innerHTML = `
-                    <button class="wa-icon-btn notify-wa-btn" data-id="${orderId}" data-num="${mobile}" style="width: 100%; justify-content: center;">
+                    <button class="wa-icon-btn notify-wa-btn" data-id="${orderId}" data-num="${mobile}" data-purpose="${purpose}" style="width: 100%; justify-content: center;">
                         <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
                         Notify User
                     </button>
@@ -428,5 +437,259 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 100);
         });
     }
+
+
+    // =================== SUPPLIER CREDIT TRACKER (Google Sheets) ===================
+
+    let _cachedCredits = []; // local cache for the payment modal
+
+    function totalPaid(credit) {
+        return (credit.payments || []).reduce((s, p) => s + p.amount, 0);
+    }
+
+    function setCreditLoading(msg) {
+        const listEl = document.getElementById('creditList');
+        listEl.innerHTML = `<div class="loader-container"><span class="loader"></span><span style="margin-left:10px;color:var(--text-muted);font-size:0.9rem;">${msg || ''}</span></div>`;
+    }
+
+    async function renderCredits() {
+        setCreditLoading('Loading from Google Sheets…');
+        try {
+            const res = await fetch(`${API_URL}?action=getCredits`);
+            const data = await res.json();
+            if (data.status !== 'success') throw new Error(data.message);
+            _cachedCredits = data.credits || [];
+            displayCredits(_cachedCredits);
+        } catch (err) {
+            document.getElementById('creditList').innerHTML =
+                `<div class="empty-state">Failed to load. Check connection.</div>`;
+            console.error(err);
+        }
+    }
+
+    function displayCredits(credits) {
+        const listEl = document.getElementById('creditList');
+        const summaryEl = document.getElementById('creditSummary');
+
+        // Summary cards
+        const totalCredit  = credits.reduce((s, c) => s + c.amount, 0);
+        const totalPaidAll = credits.reduce((s, c) => s + totalPaid(c), 0);
+        const totalDue     = totalCredit - totalPaidAll;
+        summaryEl.innerHTML = `
+            <div style="flex:1;min-width:120px;background:rgba(255,255,255,0.06);border-radius:12px;padding:14px;text-align:center;">
+                <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:4px;">Total Credit</div>
+                <div style="font-size:1.3rem;font-weight:700;color:#a78bfa;">₹${totalCredit.toLocaleString('en-IN')}</div>
+            </div>
+            <div style="flex:1;min-width:120px;background:rgba(255,255,255,0.06);border-radius:12px;padding:14px;text-align:center;">
+                <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:4px;">Total Paid</div>
+                <div style="font-size:1.3rem;font-weight:700;color:#34d399;">₹${totalPaidAll.toLocaleString('en-IN')}</div>
+            </div>
+            <div style="flex:1;min-width:120px;background:rgba(255,255,255,0.06);border-radius:12px;padding:14px;text-align:center;">
+                <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:4px;">Outstanding</div>
+                <div style="font-size:1.3rem;font-weight:700;color:${totalDue > 0 ? '#f87171' : '#34d399'};">₹${totalDue.toLocaleString('en-IN')}</div>
+            </div>
+        `;
+
+        if (credits.length === 0) {
+            listEl.innerHTML = '<div class="empty-state">No credits recorded yet.</div>';
+            return;
+        }
+
+        const sorted = [...credits].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        listEl.innerHTML = sorted.map(credit => {
+            const paid        = totalPaid(credit);
+            const due         = credit.amount - paid;
+            const pct         = Math.min(100, Math.round((paid / credit.amount) * 100));
+            const statusColor = due <= 0 ? '#34d399' : '#f87171';
+            const statusLabel = due <= 0 ? 'Cleared' : 'Outstanding';
+
+            const paymentsHtml = (credit.payments || []).map(p =>
+                `<div style="display:flex;justify-content:space-between;font-size:0.8rem;color:var(--text-muted);padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.05);">
+                    <span>📅 ${p.date}${p.note ? ' — ' + p.note : ''}</span>
+                    <span style="color:#34d399;">+₹${p.amount.toLocaleString('en-IN')}</span>
+                </div>`
+            ).join('');
+
+            return `
+            <div class="order-item" data-credit-id="${credit.id}">
+                <div class="order-item-header">
+                    <span class="order-item-id">${credit.supplier}</span>
+                    <span class="status-badge" style="background:${due <= 0 ? 'rgba(52,211,153,0.15)' : 'rgba(248,113,113,0.15)'};color:${statusColor};">${statusLabel}</span>
+                </div>
+                <div style="font-size:0.85rem;color:var(--text-muted);margin:4px 0 10px;">${credit.note ? credit.note + ' · ' : ''}${credit.date}</div>
+
+                <div style="background:rgba(255,255,255,0.07);border-radius:6px;height:6px;margin-bottom:10px;overflow:hidden;">
+                    <div style="height:100%;width:${pct}%;background:linear-gradient(90deg,#6366f1,#a78bfa);border-radius:6px;transition:width 0.4s;"></div>
+                </div>
+
+                <div style="display:flex;justify-content:space-between;font-size:0.85rem;margin-bottom:12px;">
+                    <span>Paid: <strong style="color:#34d399;">₹${paid.toLocaleString('en-IN')}</strong></span>
+                    <span>Due: <strong style="color:${statusColor};">₹${due.toLocaleString('en-IN')}</strong></span>
+                    <span>Total: <strong>₹${credit.amount.toLocaleString('en-IN')}</strong></span>
+                </div>
+
+                ${credit.payments && credit.payments.length > 0 ? `
+                <details style="margin-bottom:12px;">
+                    <summary style="font-size:0.8rem;color:var(--text-muted);cursor:pointer;">Payment history (${credit.payments.length})</summary>
+                    <div style="margin-top:8px;">${paymentsHtml}</div>
+                </details>` : ''}
+
+                <div class="action-row" style="gap:8px;">
+                    ${due > 0 ? `<button class="credit-pay-btn" data-id="${credit.id}" style="flex:1;">💰 Pay</button>` : ''}
+                    <button class="credit-delete-btn" data-id="${credit.id}" style="flex:1;background:rgba(248,113,113,0.1);border-color:rgba(248,113,113,0.3);color:#f87171;">🗑 Delete</button>
+                </div>
+            </div>`;
+        }).join('');
+
+        document.querySelectorAll('.credit-pay-btn').forEach(btn => {
+            btn.addEventListener('click', () => openPaymentModal(btn.getAttribute('data-id')));
+        });
+        document.querySelectorAll('.credit-delete-btn').forEach(btn => {
+            btn.addEventListener('click', () => deleteCredit(btn.getAttribute('data-id')));
+        });
+    }
+
+    // ── Add Credit ──
+    const addCreditBtn = document.getElementById('addCreditBtn');
+    if (addCreditBtn) {
+        addCreditBtn.addEventListener('click', async () => {
+            const supplier = document.getElementById('creditSupplier').value.trim();
+            const note     = document.getElementById('creditNote').value.trim();
+            const amount   = parseFloat(document.getElementById('creditAmount').value);
+            const date     = document.getElementById('creditDate').value || new Date().toISOString().slice(0, 10);
+
+            if (!supplier || isNaN(amount) || amount <= 0) {
+                alert('Please enter supplier name and a valid credit amount.');
+                return;
+            }
+
+            addCreditBtn.textContent = 'Saving…';
+            addCreditBtn.disabled = true;
+
+            try {
+                const res = await fetch(API_URL, {
+                    method: 'POST',
+                    body: JSON.stringify({ action: 'addCredit', supplier, note, amount, date })
+                });
+                const data = await res.json();
+                if (data.status !== 'success') throw new Error(data.message);
+
+                document.getElementById('creditSupplier').value = '';
+                document.getElementById('creditNote').value = '';
+                document.getElementById('creditAmount').value = '';
+                document.getElementById('creditDate').value = new Date().toISOString().slice(0, 10);
+                await renderCredits();
+            } catch (err) {
+                alert('Failed to save credit. Please try again.');
+                console.error(err);
+            } finally {
+                addCreditBtn.textContent = '+ Add Credit';
+                addCreditBtn.disabled = false;
+            }
+        });
+    }
+
+    // Set today as default date
+    const creditDateInput = document.getElementById('creditDate');
+    if (creditDateInput) creditDateInput.value = new Date().toISOString().slice(0, 10);
+
+    // Refresh button
+    const refreshCreditsBtn = document.getElementById('refreshCreditsBtn');
+    if (refreshCreditsBtn) refreshCreditsBtn.addEventListener('click', renderCredits);
+
+
+    // ── Delete Credit ──
+    async function deleteCredit(id) {
+        if (!confirm('Delete this credit entry?')) return;
+        const item = document.querySelector(`[data-credit-id="${id}"]`);
+        if (item) item.style.opacity = '0.4';
+        try {
+            const res = await fetch(API_URL, {
+                method: 'POST',
+                body: JSON.stringify({ action: 'deleteCredit', creditId: id })
+            });
+            const data = await res.json();
+            if (data.status !== 'success') throw new Error(data.message);
+            await renderCredits();
+        } catch (err) {
+            alert('Failed to delete. Please try again.');
+            if (item) item.style.opacity = '1';
+            console.error(err);
+        }
+    }
+
+    // ── Payment Modal ──
+    let _payingCreditId = null;
+    let _payingCreditDue = 0;
+    const paymentModal = document.getElementById('paymentModal');
+
+    function openPaymentModal(id) {
+        const credit = _cachedCredits.find(c => c.id === id);
+        if (!credit) return;
+        _payingCreditId  = id;
+        _payingCreditDue = credit.amount - totalPaid(credit);
+        document.getElementById('paymentModalInfo').textContent =
+            `${credit.supplier} — Outstanding: ₹${_payingCreditDue.toLocaleString('en-IN')}`;
+        document.getElementById('paymentAmount').value = '';
+        document.getElementById('paymentNote').value = '';
+        paymentModal.style.display = 'flex';
+    }
+
+    document.getElementById('cancelPaymentBtn').addEventListener('click', () => {
+        paymentModal.style.display = 'none';
+        _payingCreditId = null;
+    });
+
+    document.getElementById('confirmPaymentBtn').addEventListener('click', async () => {
+        const amount = parseFloat(document.getElementById('paymentAmount').value);
+        const note   = document.getElementById('paymentNote').value.trim();
+
+        if (isNaN(amount) || amount <= 0) {
+            alert('Please enter a valid payment amount.');
+            return;
+        }
+        if (amount > _payingCreditDue) {
+            alert(`Payment cannot exceed outstanding amount (₹${_payingCreditDue.toLocaleString('en-IN')}).`);
+            return;
+        }
+
+        const confirmBtn = document.getElementById('confirmPaymentBtn');
+        confirmBtn.textContent = 'Saving…';
+        confirmBtn.disabled = true;
+
+        try {
+            const res = await fetch(API_URL, {
+                method: 'POST',
+                body: JSON.stringify({
+                    action: 'addPayment',
+                    creditId: _payingCreditId,
+                    amount,
+                    note,
+                    date: new Date().toISOString().slice(0, 10)
+                })
+            });
+            const data = await res.json();
+            if (data.status !== 'success') throw new Error(data.message);
+
+            paymentModal.style.display = 'none';
+            _payingCreditId = null;
+            await renderCredits();
+        } catch (err) {
+            alert('Failed to save payment. Please try again.');
+            console.error(err);
+        } finally {
+            confirmBtn.textContent = 'Confirm Payment';
+            confirmBtn.disabled = false;
+        }
+    });
+
+    // Close modal on backdrop click
+    paymentModal.addEventListener('click', (e) => {
+        if (e.target === paymentModal) {
+            paymentModal.style.display = 'none';
+            _payingCreditId = null;
+        }
+    });
 
 });
